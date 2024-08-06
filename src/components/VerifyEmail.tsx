@@ -31,6 +31,7 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
     }
 
     if (data?.success) {
+        // mt-4 px-16
         return (
             <div className="flex h-full flex-col items-center justify-center">
                 <div className="relative mb-4 h-60 w-60 text-muted-foreground">

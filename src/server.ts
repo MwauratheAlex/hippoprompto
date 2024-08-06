@@ -15,6 +15,8 @@ const createContext = ({
   res,
 });
 
+export type ExpressContext = Awaited<ReturnType<typeof createContext>>;
+
 const start = async () => {
   const payload = await getPayloadClient({
     initOptions: {
