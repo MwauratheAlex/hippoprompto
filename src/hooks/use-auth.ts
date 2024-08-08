@@ -16,7 +16,8 @@ export const useAuth = () => {
                 }
             );
 
-            if (!res.ok) throw new Error();
+            if (!res.ok) throw new Error("Sign in error");
+
             toast.success("Signed out successfully");
             router.push("/sign-in");
             router.refresh();
