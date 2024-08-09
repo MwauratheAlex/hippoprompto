@@ -21,9 +21,11 @@ const Cart = () => {
 
     const [isMounted, setIsMounted] = useState<boolean>(false);
 
+
     useEffect(() => {
         setIsMounted(true);
     }, []);
+
 
 
     return (
@@ -44,8 +46,8 @@ const Cart = () => {
                     <>
                         <ScrollArea>
                             <div className="flex w-full flex-col pr-6">
-                                {items.map(({ product }) => (
-                                    <CartItem key={product.id} product={product} />
+                                {items.map(({ product }, idx) => (
+                                    <CartItem key={`${product.id}-${idx}`} product={product} />
                                 ))}
                             </div>
                         </ScrollArea>
