@@ -1,10 +1,11 @@
 import { z } from 'zod';
-import { privateProcedure, router } from "./trpc";
+import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from '@trpc/server';
 import { getPayloadClient } from '../get-payload';
-import { stripe } from '@/lib/stripe';
-import { Product } from '@/payload-types';
+import { stripe } from '../lib/stripe';
+import { Order, Product } from '../payload-types';
 import type Stripe from 'stripe';
+import { throws } from 'assert';
 
 export const paymentRouter = router({
   createSession: privateProcedure
@@ -36,7 +37,7 @@ export const paymentRouter = router({
         collection: "orders",
         data: {
           _isPaid: false,
-          products: filteredProdcuts,
+          products: filteredProdcuts.map((prod) => prod.id),
           user: user.id,
         }
       });
@@ -49,7 +50,7 @@ export const paymentRouter = router({
       }));
 
       line_items.push({
-        price: "prod_Qd3T6dbwtGS8ut",
+        price: "price_1PlnM8GbNuTZ2fhnGjoJzqY5",
         quantity: 1,
         adjustable_quantity: {
           enabled: false,
@@ -76,6 +77,33 @@ export const paymentRouter = router({
         return { url: null }
       }
 
+
+    }),
+
+  pollOrderStatus: privateProcedure
+    .input(z.object({ orderId: z.string() }))
+    .query(async ({ input }) => {
+      const { orderId } = input;
+
+      const payload = await getPayloadClient();
+
+      const { docs: orders } = await payload.find({
+        collection: "orders",
+        where: {
+          id: {
+            equals: orderId
+          }
+        }
+      });
+
+      if (!orders.length) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      // @ts-expect-error
+      const [order] = orders as Order[];
+
+      return { isPaid: order._isPaid }
 
     }),
 });

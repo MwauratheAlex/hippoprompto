@@ -26,7 +26,7 @@ export const Products: CollectionConfig = {
             name: data.name,
             default_price_data: {
               currency: "KES",
-              unit_amount: Math.round(data.price)
+              unit_amount: Math.round(data.price * 100)
             }
           });
 

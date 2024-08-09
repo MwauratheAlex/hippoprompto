@@ -12,6 +12,7 @@ import { useCart } from "@/hooks/use-cart";
 import CartItem from "./CartItem";
 import { useEffect, useState } from "react";
 
+
 const Cart = () => {
     const { items } = useCart();
     const itemCount = items.length;
