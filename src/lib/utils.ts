@@ -10,7 +10,7 @@ export function formatPrice(price: number | string,
     currency?: "KES" | "USD" | "GBP" | "BDT",
     notation?: Intl.NumberFormatOptions["notation"]
   } = {}) {
-  const { currency = "KES", notation = "compact" } = options;
+  const { currency = "KES", notation = "standard" } = options;
 
   const numericPrice = typeof price === "string" ? parseFloat(price) : price;
 

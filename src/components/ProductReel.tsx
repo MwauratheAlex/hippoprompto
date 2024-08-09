@@ -37,7 +37,6 @@ const ProductReel = (props: ProductReelProps) => {
     } else if (isLoading) {
         map = new Array<null>(query.limit || FALLBACK_LIMIT).fill(null);
     }
-    console.log("map", map);
 
 
     return (
