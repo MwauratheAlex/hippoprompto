@@ -24,6 +24,8 @@ export interface Config {
  */
 export interface User {
   id: string;
+  products?: (string | Product)[] | null;
+  product_files?: (string | ProductFile)[] | null;
   role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
@@ -146,14 +148,14 @@ export interface PayloadPreference {
   };
   key?: string | null;
   value?:
-  | {
-    [k: string]: unknown;
-  }
-  | unknown[]
-  | string
-  | number
-  | boolean
-  | null;
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -171,5 +173,5 @@ export interface PayloadMigration {
 
 
 declare module 'payload' {
-  export interface MyGeneratedTypes extends Config { }
+  export interface GeneratedTypes extends Config {}
 }
